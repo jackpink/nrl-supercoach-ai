@@ -1,18 +1,24 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
-	"fmt"
-	"encoding/json"
 )
 
 // templateData provides template parameters.
 type templateData struct {
 	Service  string
 	Revision string
+}
+
+type Player struct {
+	Name  string
+	Team  string
+	Price int
 }
 
 // Variables used to generate the HTML page.
@@ -63,11 +69,26 @@ func main() {
 // helloRunHandler responds to requests by rendering an HTML page.
 func helloRunHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	fruits := make(map[string]int)
-    fruits["Apples"] = 25
-    fruits["Oranges"] = 10
+	squad := make(map[string][]Player)
+	squad["Fullbacks"] = []Player{
+		{Name: "Trent Alexander-Arnold", Team: "Liverpool", Price: 7},
+		{Name: "Andrew Robertson", Team: "Liverpool", Price: 7},
+	}
+	squad["CentreWingers"] = []Player{
+		{Name: "Mohamed Salah", Team: "Liverpool", Price: 12},
+		{Name: "Sadio Mane", Team: "Liverpool", Price: 12},
+	}
 	enableCors(&w)
-	return json.NewEncoder(w).Encode(fruits)
+	jsonData, err := json.Marshal(squad)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Print(jsonData)
+	w.Write(jsonData)
+	// tmpl.Execute(w, data)
+
 }
 
 func enableCors(w *http.ResponseWriter) {
