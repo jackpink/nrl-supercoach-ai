@@ -78,6 +78,11 @@ func helloRunHandler(w http.ResponseWriter, r *http.Request) {
 		{Name: "Mohamed Salah", Team: "Liverpool", Price: 12},
 		{Name: "Sadio Mane", Team: "Liverpool", Price: 12},
 	}
+	squad["FiveEights"] = []Player{}
+	squad["Halfbacks"] = []Player{}
+	squad["FrontRowers"] = []Player{}
+	squad["Hookers"] = []Player{}
+	squad["SecondRowers"] = []Player{}
 	enableCors(&w)
 	jsonData, err := json.Marshal(squad)
 	if err != nil {
