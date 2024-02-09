@@ -1,7 +1,7 @@
 package selection
 
 
-type Player struct {
+type player struct {
 	id int
 	name string
 	position1 string
@@ -10,14 +10,27 @@ type Player struct {
 	team string
 }
 
-type Squad struct {
-	Fullbacks struct {
-		players []Player
-		size int
+func (p player) isEmpty() boolean {
+	if p.id == 0 {
+		return true
+	}
+	return false
+} 
+
+type squad struct {
+	fullbacks struct {
+		players [2]Player
 	}
 }
 
-func (squad Squad) addPlayer(player Player)
+// Map for positions needed (ie FRF to FrontRowForward)
+
+func (squad* squad) addPlayer(player player) {
+	// try to add first position
+
+	// if unsuccessfull try to add second position
+	// if unsuccessful try to add via player swap
+}
 
 func selection(year int, numberOfRookies int) {
 	// initialise empty squad
