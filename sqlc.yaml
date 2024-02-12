@@ -1,0 +1,10 @@
+version: "2"
+sql:
+  - schema: "sql/schema/nrlstats.sql"
+    queries: "sql/queries/players.sql"
+    engine: "postgresql"
+    gen:
+      go:
+        package: "selection"
+        out: "internal/selection"
+    
