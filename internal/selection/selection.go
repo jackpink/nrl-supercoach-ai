@@ -1,5 +1,10 @@
 package selection
 
+import _ "github.com/lib/pq"
+
+import (
+	"selection/players.sql.go"
+)
 
 type player struct {
 	id int
@@ -28,8 +33,8 @@ type fullbacks struct {
 }
 
 func (f fullbacks) isNotFull() boolean {
-	for player in f.players {
-		if player.id == 0{
+	for i := 0; i < len(f.players); i++ {
+		if players[i].id == 0{
 			return true
 		}
 	}
@@ -39,14 +44,14 @@ func (f fullbacks) isNotFull() boolean {
 func (f* fullbacks) addPlayer(p player) boolean {
 	if f.isNotFull() {
 		// add player
-		for player in f.players {
-			if player.id == 0 {
-				player.id = .id
-				player.name = p.name
-				player.position1 = p.position1
-				player.position2 = p.position2
-				player.price = p.price
-				player.team = p.team
+		for i := 0; i < len(f.players); i++ {
+			if players[i].id == 0 {
+				players[i].id = p.id
+				players[i].name = p.name
+				players[i].position1 = p.position1
+				players[i].position2 = p.position2
+				players[i].price = p.price
+				players[i].team = p.team
 			}
 		}
 		return true
@@ -65,10 +70,10 @@ func (squad* squad) addPlayer(player player) {
 		addedBySecondPosition, err := squad.position.addPlayer(player)
 	}
 	// if unsuccessful try to add via player swap
-	if !ad {
-		addedByPlayerSwap
+	if !addedBySecondPosition {
+		addedByPlayerSwap, err := 
 	}
-	if 
+	
 }
 
 func selection(year int, numberOfRookies int) {
@@ -91,6 +96,8 @@ func selectRookies(squad Squad, year int, numberOfRookies int) Squad {
 
 func selectStartingRookies(playersAdded int, numberOfRoookies int, squad Squad) Squad {
 	var startingRookies []Player
+	// get starting rookies
+	newStartingRookies := GetRookies(1, 2022, 175400)
 	for i := 0; i < len(startingRookies); i++ {
 		playerAdded := squad.addPlayer(startingRookies[i])
 		if playerAdded {
